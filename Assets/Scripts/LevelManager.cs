@@ -139,7 +139,7 @@ namespace Fruits
         {
             Instance = this;
             saveManager = SaveManager.Instance;
-            FruitSpawn(_fruitSpawnNum);
+            SpawnFruits(_fruitSpawnNum);
             _baseScore = saveManager.LoadBaseScore(DefineData.DefaultBaseScore);
             _score = _baseScore;
             ScoreText.text = _score.ToString();
@@ -155,14 +155,14 @@ namespace Fruits
         // Update is called once per frame
         void Update()
         {
-            LineRendererUpdate();
-            TimeUpdate();
+            UpdateLineRenderer();
+            UpdateTime();
         }
 
         /// <summary>
         /// 時間更新
         /// </summary>
-        private void TimeUpdate()
+        private void UpdateTime()
         {
             if (_isPlaying)
             {
@@ -188,7 +188,7 @@ namespace Fruits
         /// <summary>
         /// ライン描画更新
         /// </summary>
-        private void LineRendererUpdate()
+        private void UpdateLineRenderer()
         {
             if (_selectFruits.Count >= 2 && !_isExplosion)
             {
@@ -206,7 +206,7 @@ namespace Fruits
         /// フルーツ生成
         /// </summary>
         /// <param name="count">生成数</param>
-        private void FruitSpawn(int count)
+        private void SpawnFruits(int count)
         {
             var StartX = -2;
             var StartY = 5;
@@ -232,7 +232,7 @@ namespace Fruits
         /// フルーツを選択する
         /// </summary>
         /// <param name="fruit">フルーツ</param>
-        public void FruitDown(Fruit fruit)
+        public void SelectFruit(Fruit fruit)
         {
             if (!_isPlaying) return;
 
@@ -247,7 +247,7 @@ namespace Fruits
         /// フルーツをドラッグする
         /// </summary>
         /// <param name="fruit">フルーツ</param>
-        public void FruitEnter(Fruit fruit)
+        public void DragFruit(Fruit fruit)
         {
             if (!_isPlaying) return;
 
@@ -278,7 +278,7 @@ namespace Fruits
         /// <summary>
         /// フルーツの選択をやめる
         /// </summary>
-        public IEnumerator FruitUp()
+        public IEnumerator UnselectFruit()
         {
             if (!_isPlaying) yield return null;
 
@@ -344,7 +344,7 @@ namespace Fruits
             }
 
             _isExplosion = false;
-            FruitSpawn(fruits.Count);
+            SpawnFruits(fruits.Count);
 
             AddScore(point);
         }
@@ -406,7 +406,7 @@ namespace Fruits
         public void OnClickShuffleButton()
         {
             DestroyAllFruits();
-            FruitSpawn(40);
+            SpawnFruits(40);
         }
 
         /// <summary>

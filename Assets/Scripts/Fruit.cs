@@ -18,17 +18,17 @@ namespace Fruits
 
         private void OnMouseDown()
         {
-            LevelManager.Instance.FruitDown(this);
+            LevelManager.Instance.SelectFruit(this);
         }
 
         private void OnMouseEnter()
         {
-            LevelManager.Instance.FruitEnter(this);
+            LevelManager.Instance.DragFruit(this);
         }
 
         private void OnMouseUp()
         {
-            StartCoroutine(LevelManager.Instance.FruitUp());
+            StartCoroutine(LevelManager.Instance.UnselectFruit());
         }
 
         /// <summary>
